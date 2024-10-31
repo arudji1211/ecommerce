@@ -1,4 +1,4 @@
-package userinformations
+package userinformation
 
 import "gorm.io/gorm"
 
