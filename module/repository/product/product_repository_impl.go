@@ -8,12 +8,12 @@ import (
 )
 
 type ProductRepositoryImpl struct {
-	db *gorm.DB
+	Db *gorm.DB
 }
 
 func (p *ProductRepositoryImpl) GetAll(ctx context.Context) (productOut []product.Product, err error) {
 	//panic("not implemented") // TODO: Implement
-	tx := p.db.Model(product.Product{}).Find(productOut)
+	tx := p.Db.Model(product.Product{}).Find(productOut)
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -22,7 +22,7 @@ func (p *ProductRepositoryImpl) GetAll(ctx context.Context) (productOut []produc
 
 func (p *ProductRepositoryImpl) GetByID(ctx context.Context, ID uint) (productOut product.Product, err error) {
 	//panic("not implemented") // TODO: Implement
-	tx := p.db.Model(product.Product{}).Where("id = ?", ID).Find(productOut)
+	tx := p.Db.Model(product.Product{}).Where("id = ?", ID).Find(productOut)
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -31,7 +31,7 @@ func (p *ProductRepositoryImpl) GetByID(ctx context.Context, ID uint) (productOu
 
 func (p *ProductRepositoryImpl) Create(ctx context.Context, productIn product.Product) (err error) {
 	//panic("not implemented") // TODO: Implement
-	tx := p.db.Model(product.Product{}).Create(productIn)
+	tx := p.Db.Model(product.Product{}).Create(productIn)
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -40,7 +40,7 @@ func (p *ProductRepositoryImpl) Create(ctx context.Context, productIn product.Pr
 
 func (p *ProductRepositoryImpl) Update(ctx context.Context, productIn product.Product) (err error) {
 	//panic("not implemented") // TODO: Implement
-	tx := p.db.Model(product.Product{}).Where("id = ?", productIn.ID).Updates(&productIn)
+	tx := p.Db.Model(product.Product{}).Where("id = ?", productIn.ID).Updates(&productIn)
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -49,7 +49,7 @@ func (p *ProductRepositoryImpl) Update(ctx context.Context, productIn product.Pr
 
 func (p *ProductRepositoryImpl) Delete(ctx context.Context, ID uint) (err error) {
 	// panic("not implemented") // TODO: Implement
-	tx := p.db.Model(product.Product{}).Where("id = ?", ID).Delete(product.Product{})
+	tx := p.Db.Model(product.Product{}).Where("id = ?", ID).Delete(product.Product{})
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -58,6 +58,6 @@ func (p *ProductRepositoryImpl) Delete(ctx context.Context, ID uint) (err error)
 
 func NewProductRepository(DB *gorm.DB) ProductRepository {
 	return &ProductRepositoryImpl{
-		db: DB,
+		Db: DB,
 	}
 }
