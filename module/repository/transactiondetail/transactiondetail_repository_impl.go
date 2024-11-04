@@ -27,8 +27,16 @@ func (T *TransactionDetailRepositoryImpl) GetByTransactionDetailID(ctx context.C
 	return
 }
 
-func (T *TransactionDetailRepositoryImpl) UpdateByTransactionDetailID(ctx context.Context, TransactionID uint, TransactionDetailIn transactiondetail.TransactionDetail) (err error) {
-	tx := T.Db.Model(transactiondetail.TransactionDetail{}).Where("ID = ?", TransactionID).Updates(&TransactionDetailIn)
+func (T *TransactionDetailRepositoryImpl) Create(ctx context.Context, TransactionDetailIn transactiondetail.TransactionDetail) (err error) {
+	tx := T.Db.Model(transactiondetail.TransactionDetail{}).Create(&TransactionDetailIn)
+	if err = tx.Error; err != nil {
+		return
+	}
+	return
+}
+
+func (T *TransactionDetailRepositoryImpl) UpdateByTransactionDetailID(ctx context.Context, TransactionDetailIn transactiondetail.TransactionDetail) (err error) {
+	tx := T.Db.Model(transactiondetail.TransactionDetail{}).Where("ID = ?", TransactionDetailIn.ID).Updates(&TransactionDetailIn)
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -41,4 +49,10 @@ func (T *TransactionDetailRepositoryImpl) DeleteByTransactionDetailID(ctx contex
 		return
 	}
 	return
+}
+
+func NewTransactionDetailRepository(db *gorm.DB) TransactionDetailRepository {
+	return &TransactionDetailRepositoryImpl{
+		Db: db,
+	}
 }

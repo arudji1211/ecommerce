@@ -9,6 +9,7 @@ import (
 type TransactionDetailRepository interface {
 	GetAllByTransactionID(ctx context.Context, TransactionID uint) (TransactionDetailOut []transactiondetail.TransactionDetail, err error)
 	GetByTransactionDetailID(ctx context.Context, TransactionID uint) (TransactionDetailOut transactiondetail.TransactionDetail, err error)
-	UpdateByTransactionDetailID(ctx context.Context, TransactionID uint) (err error)
+	Create(ctx context.Context, TransactionDetailIn transactiondetail.TransactionDetail) (err error)
+	UpdateByTransactionDetailID(ctx context.Context, TransactionDetailIn transactiondetail.TransactionDetail) (err error)
 	DeleteByTransactionDetailID(ctx context.Context, TransactionID uint) (err error)
 }

@@ -41,6 +41,15 @@ func (t *TransactionRepositoryImpl) UpdateByID(ctx context.Context, ID uint, Tra
 	}
 	return
 }
+
+func (t *TransactionRepositoryImpl) Create(ctx context.Context, ID uint, TransactionIn transaction.Transaction) (err error) {
+	tx := t.Db.Model(transaction.Transaction{}).Create(&TransactionIn)
+	if err = tx.Error; err != nil {
+		return
+	}
+	return
+}
+
 func (t *TransactionRepositoryImpl) DeleteByID(ctx context.Context, ID uint) (err error) {
 	tx := t.Db.Model(transaction.Transaction{}).Where("ID = ?", ID).Delete(transaction.Transaction{})
 	if err = tx.Error; err != nil {
