@@ -9,4 +9,5 @@ type UserInformation struct {
 	Address   string
 	Telephone string
 	Email     string
+	UserID    uint
 }

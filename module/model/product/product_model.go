@@ -1,7 +1,7 @@
 package product
 
 import (
-	productdetails "github.com/arudji1211/ecommerce/module/model/productDetail"
+	productdetails "github.com/arudji1211/ecommerce/module/model/productdetail"
 	"gorm.io/gorm"
 )
 
