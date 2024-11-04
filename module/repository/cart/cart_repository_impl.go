@@ -5,6 +5,7 @@ import (
 
 	"github.com/arudji1211/ecommerce/module/model/cart"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type CartRepositoryImpl struct {
@@ -21,13 +22,13 @@ func (c *CartRepositoryImpl) GetAll(ctx context.Context, id uint) (cartOut []car
 	return
 }
 
-func (c *CartRepositoryImpl) Create(ctx context.Context, cartIn cart.Cart) (err error) {
+func (c *CartRepositoryImpl) Create(ctx context.Context, cartIn cart.Cart) (cart.Cart, error) {
 	// panic("not implemented") // TODO: Implement
-	tx := c.db.Model(cart.Cart{}).Create(cartIn)
-	if err = tx.Error; err != nil {
-		return
+	tx := c.db.Model(cart.Cart{}).Clauses(clause.Returning{}).Create(cartIn)
+	if err := tx.Error; err != nil {
+		return cartIn, err
 	}
-	return
+	return cartIn, nil
 }
 
 func (c *CartRepositoryImpl) Update(ctx context.Context, cartIn cart.Cart) (err error) {

@@ -8,7 +8,7 @@ import (
 
 type CartRepository interface {
 	GetAll(ctx context.Context, id uint) (cartOut []cart.Cart, err error)
-	Create(ctx context.Context, cartIn cart.Cart) (err error)
+	Create(ctx context.Context, cartIn cart.Cart) (cart.Cart, error)
 	Update(ctx context.Context, cartIn cart.Cart) (err error)
 	Delete(ctx context.Context, id uint) (err error)
 }

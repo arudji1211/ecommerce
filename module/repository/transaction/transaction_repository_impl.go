@@ -5,6 +5,7 @@ import (
 
 	"github.com/arudji1211/ecommerce/module/model/transaction"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type TransactionRepositoryImpl struct {
@@ -42,12 +43,12 @@ func (t *TransactionRepositoryImpl) UpdateByID(ctx context.Context, ID uint, Tra
 	return
 }
 
-func (t *TransactionRepositoryImpl) Create(ctx context.Context, ID uint, TransactionIn transaction.Transaction) (err error) {
-	tx := t.Db.Model(transaction.Transaction{}).Create(&TransactionIn)
-	if err = tx.Error; err != nil {
-		return
+func (t *TransactionRepositoryImpl) Create(ctx context.Context, ID uint, TransactionIn transaction.Transaction) (transaction.Transaction, error) {
+	tx := t.Db.Model(transaction.Transaction{}).Clauses(clause.Returning{}).Create(&TransactionIn)
+	if err := tx.Error; err != nil {
+		return TransactionIn, err
 	}
-	return
+	return TransactionIn, nil
 }
 
 func (t *TransactionRepositoryImpl) DeleteByID(ctx context.Context, ID uint) (err error) {

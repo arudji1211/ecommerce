@@ -5,6 +5,7 @@ import (
 
 	"github.com/arudji1211/ecommerce/module/model/userinformation"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type UserInformationRepositoryImpl struct {
@@ -28,13 +29,13 @@ func (U *UserInformationRepositoryImpl) GetUserInformationByUserID(ctx context.C
 	return
 }
 
-func (U *UserInformationRepositoryImpl) Create(ctx context.Context, UserIn userinformation.UserInformation) (err error) {
+func (U *UserInformationRepositoryImpl) Create(ctx context.Context, UserIn userinformation.UserInformation) (userinformation.UserInformation, error) {
 	//panic("not implemented") // TODO: Implement
-	tx := U.Db.Model(userinformation.UserInformation{}).Create(&UserIn)
-	if err = tx.Error; err != nil {
-		return
+	tx := U.Db.Model(userinformation.UserInformation{}).Clauses(clause.Returning{}).Create(&UserIn)
+	if err := tx.Error; err != nil {
+		return UserIn, err
 	}
-	return
+	return UserIn, nil
 }
 
 func (U *UserInformationRepositoryImpl) Update(ctx context.Context, UserIn userinformation.UserInformation) (err error) {

@@ -9,7 +9,7 @@ import (
 type UserInformationRepository interface {
 	GetAll(ctx context.Context) (UsersOut []userinformation.UserInformation, err error)
 	GetUserInformationByUserID(ctx context.Context, UserID string) (UserOut userinformation.UserInformation, err error)
-	Create(ctx context.Context, UserIn userinformation.UserInformation) (err error)
+	Create(ctx context.Context, UserIn userinformation.UserInformation) (userinformation.UserInformation, error)
 	Update(ctx context.Context, UserIn userinformation.UserInformation) (err error)
 	Delete(ctx context.Context, ID uint) (err error)
 }

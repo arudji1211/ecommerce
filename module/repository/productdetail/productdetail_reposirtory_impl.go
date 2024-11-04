@@ -5,6 +5,7 @@ import (
 
 	productdetail "github.com/arudji1211/ecommerce/module/model/productDetail"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type ProductDetailRepositoryImpl struct {
@@ -29,13 +30,13 @@ func (p *ProductDetailRepositoryImpl) GetByID(ctx context.Context, ID uint) (pro
 	return
 }
 
-func (p *ProductDetailRepositoryImpl) Create(ctx context.Context, productdetailIn productdetail.ProductDetail) (err error) {
+func (p *ProductDetailRepositoryImpl) Create(ctx context.Context, productdetailIn productdetail.ProductDetail) (productdetail.ProductDetail, error) {
 	// panic("not implemented") // TODO: Implement
-	tx := p.db.Model(productdetail.ProductDetail{}).Create(productdetailIn)
-	if err = tx.Error; err != nil {
-		return
+	tx := p.db.Model(productdetail.ProductDetail{}).Clauses(clause.Returning{}).Create(productdetailIn)
+	if err := tx.Error; err != nil {
+		return productdetailIn, err
 	}
-	return
+	return productdetailIn, nil
 }
 
 func (p *ProductDetailRepositoryImpl) Update(ctx context.Context, productdetailIn productdetail.ProductDetail) (err error) {

@@ -5,6 +5,7 @@ import (
 
 	transactiondetail "github.com/arudji1211/ecommerce/module/model/transactionDetail"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type TransactionDetailRepositoryImpl struct {
@@ -27,12 +28,12 @@ func (T *TransactionDetailRepositoryImpl) GetByTransactionDetailID(ctx context.C
 	return
 }
 
-func (T *TransactionDetailRepositoryImpl) Create(ctx context.Context, TransactionDetailIn transactiondetail.TransactionDetail) (err error) {
-	tx := T.Db.Model(transactiondetail.TransactionDetail{}).Create(&TransactionDetailIn)
-	if err = tx.Error; err != nil {
-		return
+func (T *TransactionDetailRepositoryImpl) Create(ctx context.Context, TransactionDetailIn transactiondetail.TransactionDetail) (transactiondetail.TransactionDetail, error) {
+	tx := T.Db.Model(transactiondetail.TransactionDetail{}).Clauses(clause.Returning{}).Create(&TransactionDetailIn)
+	if err := tx.Error; err != nil {
+		return TransactionDetailIn, err
 	}
-	return
+	return TransactionDetailIn, nil
 }
 
 func (T *TransactionDetailRepositoryImpl) UpdateByTransactionDetailID(ctx context.Context, TransactionDetailIn transactiondetail.TransactionDetail) (err error) {

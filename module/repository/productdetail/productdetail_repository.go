@@ -9,7 +9,7 @@ import (
 type ProductDetailRepository interface {
 	GetAllByProductID(ctx context.Context, ID uint) (productdetailIn []productdetail.ProductDetail, err error)
 	GetByID(ctx context.Context, ID uint) (productdetailIn productdetail.ProductDetail, err error)
-	Create(ctx context.Context, productdetailIn productdetail.ProductDetail) (err error)
+	Create(ctx context.Context, productdetailIn productdetail.ProductDetail) (productdetail.ProductDetail, error)
 	Update(ctx context.Context, productdetailIn productdetail.ProductDetail) (err error)
 	Delete(ctx context.Context, ID uint) (err error)
 }
