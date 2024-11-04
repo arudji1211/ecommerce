@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/arudji1211/ecommerce/module/model/cart"
-	UIModel "github.com/arudji1211/ecommerce/module/model/userinformations"
+	UIModel "github.com/arudji1211/ecommerce/module/model/userinformation"
 	"gorm.io/gorm"
 )
 
