@@ -3,7 +3,7 @@ package cart
 import (
 	"context"
 
-	"github.com/arudji1211/ecommerce/module/model/cart"
+	Mcart "github.com/arudji1211/ecommerce/module/model/cart"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -12,9 +12,9 @@ type CartRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func (c *CartRepositoryImpl) GetAll(ctx context.Context, id uint) (cartOut []cart.Cart, err error) {
+func (c *CartRepositoryImpl) GetAll(ctx context.Context, id uint) (cartOut []Mcart.Cart, err error) {
 	// panic("not implemented") // TODO: Implement
-	tx := c.db.Model(cart.Cart{}).Find(&cartOut)
+	tx := c.db.Model(Mcart.Cart{}).Find(&cartOut)
 
 	if err = tx.Error; err != nil {
 		return
@@ -22,18 +22,18 @@ func (c *CartRepositoryImpl) GetAll(ctx context.Context, id uint) (cartOut []car
 	return
 }
 
-func (c *CartRepositoryImpl) Create(ctx context.Context, cartIn cart.Cart) (cart.Cart, error) {
+func (c *CartRepositoryImpl) Create(ctx context.Context, cartIn Mcart.Cart) (Mcart.Cart, error) {
 	// panic("not implemented") // TODO: Implement
-	tx := c.db.Model(cart.Cart{}).Clauses(clause.Returning{}).Create(cartIn)
+	tx := c.db.Model(Mcart.Cart{}).Clauses(clause.Returning{}).Create(cartIn)
 	if err := tx.Error; err != nil {
 		return cartIn, err
 	}
 	return cartIn, nil
 }
 
-func (c *CartRepositoryImpl) Update(ctx context.Context, cartIn cart.Cart) (err error) {
+func (c *CartRepositoryImpl) Update(ctx context.Context, cartIn Mcart.Cart) (err error) {
 	// panic("not implemented") // TODO: Implement
-	tx := c.db.Model(cart.Cart{}).Where("id = ?").Update("quantity", &cartIn.Quantity)
+	tx := c.db.Model(Mcart.Cart{}).Where("id = ?").Update("quantity", &cartIn.Quantity)
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -41,7 +41,7 @@ func (c *CartRepositoryImpl) Update(ctx context.Context, cartIn cart.Cart) (err 
 }
 
 func (c *CartRepositoryImpl) Delete(ctx context.Context, id uint) (err error) {
-	tx := c.db.Model(cart.Cart{}).Where("id = ?", id).Delete(&cart.Cart{})
+	tx := c.db.Model(Mcart.Cart{}).Where("id = ?", id).Delete(&Mcart.Cart{})
 	if err = tx.Error; err != nil {
 		return
 	}

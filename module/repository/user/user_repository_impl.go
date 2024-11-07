@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 
-	"github.com/arudji1211/ecommerce/module/model/user"
+	MDuser "github.com/arudji1211/ecommerce/module/model/user"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -12,35 +12,35 @@ type UserRepositoryImpl struct {
 	Db *gorm.DB
 }
 
-func (U *UserRepositoryImpl) GetAll(ctx context.Context) (UsersOut []user.User, err error) {
+func (U *UserRepositoryImpl) GetAll(ctx context.Context) (UsersOut []MDuser.User, err error) {
 	// panic("not implemented") // TODO: Implement
-	tx := U.Db.Model(user.User{}).Find(&UsersOut)
+	tx := U.Db.Model(MDuser.User{}).Find(&UsersOut)
 	if err = tx.Error; err != nil {
 		return
 	}
 	return
 }
 
-func (U *UserRepositoryImpl) GetUserByUsername(ctx context.Context, Username string) (UserOut user.User, err error) {
-	tx := U.Db.Model(user.User{}).Where("Username = ?", Username).Find(&UserOut)
+func (U *UserRepositoryImpl) GetUserByUsername(ctx context.Context, Username string) (UserOut MDuser.User, err error) {
+	tx := U.Db.Model(MDuser.User{}).Where("Username = ?", Username).Find(&UserOut)
 	if err = tx.Error; err != nil {
 		return
 	}
 	return
 }
 
-func (U *UserRepositoryImpl) Create(ctx context.Context, UserIn user.User) (user.User, error) {
+func (U *UserRepositoryImpl) Create(ctx context.Context, UserIn MDuser.User) (MDuser.User, error) {
 	//panic("not implemented") // TODO: Implement
-	tx := U.Db.Model(user.User{}).Clauses(clause.Returning{}).Create(&UserIn)
+	tx := U.Db.Model(MDuser.User{}).Clauses(clause.Returning{}).Create(&UserIn)
 	if err := tx.Error; err != nil {
 		return UserIn, err
 	}
 	return UserIn, nil
 }
 
-func (U *UserRepositoryImpl) Update(ctx context.Context, UserIn user.User) (err error) {
+func (U *UserRepositoryImpl) Update(ctx context.Context, UserIn MDuser.User) (err error) {
 	//panic("not implemented") // TODO: Implement
-	tx := U.Db.Model(user.User{}).Where("ID = ? ", UserIn.ID).Updates(&UserIn)
+	tx := U.Db.Model(MDuser.User{}).Where("ID = ? ", UserIn.ID).Updates(&UserIn)
 	if err = tx.Error; err != nil {
 		return
 	}
@@ -48,7 +48,7 @@ func (U *UserRepositoryImpl) Update(ctx context.Context, UserIn user.User) (err 
 }
 
 func (U *UserRepositoryImpl) Delete(ctx context.Context, ID uint) (err error) {
-	tx := U.Db.Model(user.User{}).Where("username = ? ", ID).Delete(user.User{})
+	tx := U.Db.Model(MDuser.User{}).Where("username = ? ", ID).Delete(MDuser.User{})
 	if err = tx.Error; err != nil {
 		return
 	}

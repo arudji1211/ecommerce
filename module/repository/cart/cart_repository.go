@@ -3,12 +3,12 @@ package cart
 import (
 	"context"
 
-	"github.com/arudji1211/ecommerce/module/model/cart"
+	Mcart "github.com/arudji1211/ecommerce/module/model/cart"
 )
 
 type CartRepository interface {
-	GetAll(ctx context.Context, id uint) (cartOut []cart.Cart, err error)
-	Create(ctx context.Context, cartIn cart.Cart) (cart.Cart, error)
-	Update(ctx context.Context, cartIn cart.Cart) (err error)
+	GetAll(ctx context.Context, id uint) (cartOut []Mcart.Cart, err error)
+	Create(ctx context.Context, cartIn Mcart.Cart) (Mcart.Cart, error)
+	Update(ctx context.Context, cartIn Mcart.Cart) (err error)
 	Delete(ctx context.Context, id uint) (err error)
 }
