@@ -3,13 +3,13 @@ package product
 import (
 	"context"
 
-	"github.com/arudji1211/ecommerce/module/model/product"
+	PDmodel "github.com/arudji1211/ecommerce/module/model/product"
 )
 
 type ProductService interface {
-	GetAll(ctx context.Context) (Products []product.Product, err error)
-	GetByID(ctx context.Context, ID uint) (Product product.Product, err error)
-	Create(ctx context.Context, ProductIn product.Product) (ProductOut product.Product, err error)
-	Update(ctx context.Context, Product product.Product) (err error)
+	GetAll(ctx context.Context) (Products []PDmodel.Product, err error)
+	GetByID(ctx context.Context, ID uint) (Product PDmodel.Product, err error)
+	Create(ctx context.Context, ProductIn PDmodel.Product) (ProductOut PDmodel.Product, err error)
+	Update(ctx context.Context, Product PDmodel.Product) (err error)
 	Delete(ctx context.Context, ID uint) (err error)
 }
