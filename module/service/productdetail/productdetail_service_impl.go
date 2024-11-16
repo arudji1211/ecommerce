@@ -21,17 +21,41 @@ func (p *ProductDetailServiceImpl) GetAll(ctx context.Context, ID uint) (product
 }
 
 func (p *ProductDetailServiceImpl) GetByID(ctx context.Context, ID uint) (productdetail PDmodel.ProductDetail, err error) {
-	panic("not implemented") // TODO: Implement
+	//panic("not implemented") // TODO: Implement
+	productdetail, err = p.ProductDetailRepo.GetByID(ctx, ID)
+	if err != nil {
+		return
+	}
+	return
 }
 
-func (p *ProductDetailServiceImpl) Create(ctx context.Context, productdetailIn PDmodel.ProductDetail) (productdetailOut PDmodel.ProductDetail, err error) {
-	panic("not implemented") // TODO: Implement
+func (p *ProductDetailServiceImpl) Create(ctx context.Context, productdetailIn PDmodel.ProductDetail) (ProductDetailOut PDmodel.ProductDetail, err error) {
+	ProductDetailOut, err = p.ProductDetailRepo.Create(ctx, productdetailIn)
+	if err != nil {
+		return ProductDetailOut, err
+	}
+	return ProductDetailOut, err
 }
 
 func (p *ProductDetailServiceImpl) Update(ctx context.Context, productdetail PDmodel.ProductDetail) (err error) {
-	panic("not implemented") // TODO: Implement
+	err = p.ProductDetailRepo.Update(ctx, productdetail)
+	if err != nil {
+		return
+	}
+	return
 }
 
 func (p *ProductDetailServiceImpl) Delete(ctx context.Context, ID uint) (err error) {
-	panic("not implemented") // TODO: Implement
+	//panic("not implemented") // TODO: Implement
+	err = p.ProductDetailRepo.Delete(ctx, ID)
+	if err != nil {
+		return
+	}
+	return
+}
+
+func NewProductDetailService(repo PDrepo.ProductDetailRepository) ProductDetailService {
+	return &ProductDetailServiceImpl{
+		ProductDetailRepo: repo,
+	}
 }
