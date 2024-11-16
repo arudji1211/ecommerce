@@ -55,3 +55,9 @@ func (u *UserServiceImpl) Delete(ctx context.Context, ID uint) (err error) {
 	}
 	return
 }
+
+func NewUserService(repo USrepo.UserRepository) UserService {
+	return &UserServiceImpl{
+		UserRepo: repo,
+	}
+}
