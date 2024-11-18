@@ -27,7 +27,7 @@ func (t *TransactionRepositoryImpl) GetByID(ctx context.Context, ID uint) (Trans
 	return
 }
 
-func (t *TransactionRepositoryImpl) GetAll(ctx context.Context, UserID uint) (TransactionOut []MDtransaction.Transaction, err error) {
+func (t *TransactionRepositoryImpl) GetAll(ctx context.Context) (TransactionOut []MDtransaction.Transaction, err error) {
 	tx := t.Db.Model(MDtransaction.Transaction{}).Find(&TransactionOut)
 	if err = tx.Error; err != nil {
 		return
@@ -43,7 +43,7 @@ func (t *TransactionRepositoryImpl) UpdateByID(ctx context.Context, ID uint, Tra
 	return
 }
 
-func (t *TransactionRepositoryImpl) Create(ctx context.Context, ID uint, TransactionIn MDtransaction.Transaction) (MDtransaction.Transaction, error) {
+func (t *TransactionRepositoryImpl) Create(ctx context.Context, TransactionIn MDtransaction.Transaction) (MDtransaction.Transaction, error) {
 	tx := t.Db.Model(MDtransaction.Transaction{}).Clauses(clause.Returning{}).Create(&TransactionIn)
 	if err := tx.Error; err != nil {
 		return TransactionIn, err
