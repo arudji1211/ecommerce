@@ -64,3 +64,9 @@ func (t *TransactionServiceImpl) DeleteByID(ctx context.Context, ID uint) (err e
 	}
 	return
 }
+
+func NewTransactionService(repo Rtransaction.TransactionRepository) TransactionService {
+	return &TransactionServiceImpl{
+		TRepo: repo,
+	}
+}
