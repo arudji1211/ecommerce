@@ -12,7 +12,7 @@ type ProductDetailRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func (p *ProductDetailRepositoryImpl) GetAllByProductID(ctx context.Context, ID uint) (productdetailOut []MDproductdetail.ProductDetail, err error) {
+func (p *ProductDetailRepositoryImpl) GetAllByProductID(ctx context.Context, db *gorm.DB, ID uint) (productdetailOut []MDproductdetail.ProductDetail, err error) {
 	//panic("not implemented") // TODO: Implement
 	tx := p.db.Model(MDproductdetail.ProductDetail{}).Where("ProductID = ?", ID).Find(&productdetailOut)
 	if err = tx.Error; err != nil {
@@ -21,7 +21,7 @@ func (p *ProductDetailRepositoryImpl) GetAllByProductID(ctx context.Context, ID 
 	return
 }
 
-func (p *ProductDetailRepositoryImpl) GetByID(ctx context.Context, ID uint) (productdetailOut MDproductdetail.ProductDetail, err error) {
+func (p *ProductDetailRepositoryImpl) GetByID(ctx context.Context, db *gorm.DB, ID uint) (productdetailOut MDproductdetail.ProductDetail, err error) {
 	//panic("not implemented") // TODO: Implement
 	tx := p.db.Model(MDproductdetail.ProductDetail{}).Where("ID = ?", ID).Find(&productdetailOut)
 	if err = tx.Error; err != nil {
@@ -30,7 +30,7 @@ func (p *ProductDetailRepositoryImpl) GetByID(ctx context.Context, ID uint) (pro
 	return
 }
 
-func (p *ProductDetailRepositoryImpl) Create(ctx context.Context, productdetailIn MDproductdetail.ProductDetail) (MDproductdetail.ProductDetail, error) {
+func (p *ProductDetailRepositoryImpl) Create(ctx context.Context, db *gorm.DB, productdetailIn MDproductdetail.ProductDetail) (MDproductdetail.ProductDetail, error) {
 	// panic("not implemented") // TODO: Implement
 	tx := p.db.Model(MDproductdetail.ProductDetail{}).Clauses(clause.Returning{}).Create(productdetailIn)
 	if err := tx.Error; err != nil {
@@ -39,7 +39,7 @@ func (p *ProductDetailRepositoryImpl) Create(ctx context.Context, productdetailI
 	return productdetailIn, nil
 }
 
-func (p *ProductDetailRepositoryImpl) Update(ctx context.Context, productdetailIn MDproductdetail.ProductDetail) (err error) {
+func (p *ProductDetailRepositoryImpl) Update(ctx context.Context, db *gorm.DB, productdetailIn MDproductdetail.ProductDetail) (err error) {
 	//panic("not implemented") // TODO: Implement
 	tx := p.db.Model(MDproductdetail.ProductDetail{}).Where("ID = ?", productdetailIn.ID).Updates(productdetailIn)
 	if err = tx.Error; err != nil {
@@ -48,13 +48,19 @@ func (p *ProductDetailRepositoryImpl) Update(ctx context.Context, productdetailI
 	return
 }
 
-func (p *ProductDetailRepositoryImpl) Delete(ctx context.Context, ID uint) (err error) {
+func (p *ProductDetailRepositoryImpl) Delete(ctx context.Context, db *gorm.DB, ID uint) (err error) {
 	// panic("not implemented") // TODO: Implement
 	tx := p.db.Model(MDproductdetail.ProductDetail{}).Where("ID = ?", ID).Delete(MDproductdetail.ProductDetail{})
 	if err = tx.Error; err != nil {
 		return
 	}
 	return
+}
+
+func (p *ProductDetailRepositoryImpl) IsTransaction(Db *gorm.DB) {
+	if Db != nil {
+		p.db = Db
+	}
 }
 
 func NewProductDetailRepository(Db *gorm.DB) ProductDetailRepository {

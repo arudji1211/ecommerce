@@ -5,49 +5,50 @@ import (
 
 	PDmodel "github.com/arudji1211/ecommerce/module/model/productdetail"
 	PDrepo "github.com/arudji1211/ecommerce/module/repository/productdetail"
+	"gorm.io/gorm"
 )
 
 type ProductDetailServiceImpl struct {
 	ProductDetailRepo PDrepo.ProductDetailRepository
 }
 
-func (p *ProductDetailServiceImpl) GetAll(ctx context.Context, ID uint) (productdetails []PDmodel.ProductDetail, err error) {
+func (p *ProductDetailServiceImpl) GetAll(ctx context.Context, db *gorm.DB, ID uint) (productdetails []PDmodel.ProductDetail, err error) {
 	//panic("not implemented") // TODO: Implement
-	productdetails, err = p.ProductDetailRepo.GetAllByProductID(ctx, ID)
+	productdetails, err = p.ProductDetailRepo.GetAllByProductID(ctx, db, ID)
 	if err != nil {
 		return
 	}
 	return
 }
 
-func (p *ProductDetailServiceImpl) GetByID(ctx context.Context, ID uint) (productdetail PDmodel.ProductDetail, err error) {
+func (p *ProductDetailServiceImpl) GetByID(ctx context.Context, db *gorm.DB, ID uint) (productdetail PDmodel.ProductDetail, err error) {
 	//panic("not implemented") // TODO: Implement
-	productdetail, err = p.ProductDetailRepo.GetByID(ctx, ID)
+	productdetail, err = p.ProductDetailRepo.GetByID(ctx, db, ID)
 	if err != nil {
 		return
 	}
 	return
 }
 
-func (p *ProductDetailServiceImpl) Create(ctx context.Context, productdetailIn PDmodel.ProductDetail) (ProductDetailOut PDmodel.ProductDetail, err error) {
-	ProductDetailOut, err = p.ProductDetailRepo.Create(ctx, productdetailIn)
+func (p *ProductDetailServiceImpl) Create(ctx context.Context, db *gorm.DB, productdetailIn PDmodel.ProductDetail) (ProductDetailOut PDmodel.ProductDetail, err error) {
+	ProductDetailOut, err = p.ProductDetailRepo.Create(ctx, db, productdetailIn)
 	if err != nil {
 		return ProductDetailOut, err
 	}
 	return ProductDetailOut, err
 }
 
-func (p *ProductDetailServiceImpl) Update(ctx context.Context, productdetail PDmodel.ProductDetail) (err error) {
-	err = p.ProductDetailRepo.Update(ctx, productdetail)
+func (p *ProductDetailServiceImpl) Update(ctx context.Context, db *gorm.DB, productdetail PDmodel.ProductDetail) (err error) {
+	err = p.ProductDetailRepo.Update(ctx, db, productdetail)
 	if err != nil {
 		return
 	}
 	return
 }
 
-func (p *ProductDetailServiceImpl) Delete(ctx context.Context, ID uint) (err error) {
+func (p *ProductDetailServiceImpl) Delete(ctx context.Context, db *gorm.DB, ID uint) (err error) {
 	//panic("not implemented") // TODO: Implement
-	err = p.ProductDetailRepo.Delete(ctx, ID)
+	err = p.ProductDetailRepo.Delete(ctx, db, ID)
 	if err != nil {
 		return
 	}
