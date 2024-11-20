@@ -11,3 +11,8 @@ type Product struct {
 	Description string
 	Detail      productdetails.ProductDetail
 }
+
+type ProductWithDetail struct {
+	Product
+	ProductDetail productdetails.ProductDetail
+}

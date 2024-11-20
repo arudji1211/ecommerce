@@ -46,6 +46,14 @@ func (p *ProductDetailServiceImpl) Update(ctx context.Context, db *gorm.DB, prod
 	return
 }
 
+func (p *ProductDetailServiceImpl) UpdateStock(ctx context.Context, db *gorm.DB, ID uint, operation string, quantity int) (err error) {
+	err = p.ProductDetailRepo.UpdateStock(ctx, db, ID, operation, quantity)
+	if err != nil {
+		return
+	}
+	return
+}
+
 func (p *ProductDetailServiceImpl) Delete(ctx context.Context, db *gorm.DB, ID uint) (err error) {
 	//panic("not implemented") // TODO: Implement
 	err = p.ProductDetailRepo.Delete(ctx, db, ID)

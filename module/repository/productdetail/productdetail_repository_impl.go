@@ -48,6 +48,16 @@ func (p *ProductDetailRepositoryImpl) Update(ctx context.Context, db *gorm.DB, p
 	return
 }
 
+func (p *ProductDetailRepositoryImpl) UpdateStock(ctx context.Context, db *gorm.DB, ID uint, operation string, quantity int) (err error) {
+	//panic("not implemented") // TODO: Implement
+	expr := "stock " + operation + " ?"
+	tx := p.db.Model(MDproductdetail.ProductDetail{}).Where("ID = ? AND stock > 0", ID).UpdateColumn("stock", gorm.Expr(expr, quantity))
+	if err = tx.Error; err != nil {
+		return
+	}
+	return
+}
+
 func (p *ProductDetailRepositoryImpl) Delete(ctx context.Context, db *gorm.DB, ID uint) (err error) {
 	// panic("not implemented") // TODO: Implement
 	tx := p.db.Model(MDproductdetail.ProductDetail{}).Where("ID = ?", ID).Delete(MDproductdetail.ProductDetail{})

@@ -12,5 +12,6 @@ type ProductDetailService interface {
 	GetByID(ctx context.Context, db *gorm.DB, ID uint) (productdetail PDmodel.ProductDetail, err error)
 	Create(ctx context.Context, db *gorm.DB, productdetailIn PDmodel.ProductDetail) (productdetailOut PDmodel.ProductDetail, err error)
 	Update(ctx context.Context, db *gorm.DB, productdetail PDmodel.ProductDetail) (err error)
+	UpdateStock(ctx context.Context, db *gorm.DB, ID uint, operation string, quantity int) (err error)
 	Delete(ctx context.Context, db *gorm.DB, ID uint) (err error)
 }
