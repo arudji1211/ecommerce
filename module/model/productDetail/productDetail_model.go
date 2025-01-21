@@ -9,4 +9,5 @@ type ProductDetail struct {
 	Size      string `json:"size"`
 	Warna     string `json:"warna"`
 	Stock     int    `json:"stock"`
+	Harga     int    `json:"harga"`
 }

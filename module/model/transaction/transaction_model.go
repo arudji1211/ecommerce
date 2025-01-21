@@ -7,5 +7,5 @@ type Transaction struct {
 	UserID        uint
 	PaymentMethod string
 	Status        string
-	Amount        float64
+	Amount        int
 }
